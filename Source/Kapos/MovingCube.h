@@ -12,18 +12,14 @@ class KAPOS_API AMovingCube : public APawn
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	AMovingCube();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(VisibleAnywhere)
@@ -31,6 +27,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ForwardSpeed = 1500.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SideSpeed = 500.f;
 
 	UFUNCTION()
 	void MoveRight(float Scale);
