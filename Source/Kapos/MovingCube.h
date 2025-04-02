@@ -34,6 +34,14 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float SideSpeed = 500.f;
 
+	UPROPERTY(EditDefaultsOnly)
+	float FallZ = -400.f;
+
 	UFUNCTION()
 	void MoveRight(float Scale);
+
+	UFUNCTION()
+	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+
+	void RestartLevel();
 };
