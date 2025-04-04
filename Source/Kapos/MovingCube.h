@@ -44,4 +44,10 @@ public:
 	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
 
 	void RestartLevel();
+
+	void IncreaseScore() { score++; };
+
+private:
+
+	int score = 0;
 };
