@@ -4,6 +4,9 @@
 #include "Collectable.h"
 #include "Components/SphereComponent.h"
 #include "MovingCube.h"
+#include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraSystem.h"
 
 ACollectable::ACollectable()
 {
@@ -41,7 +44,13 @@ void ACollectable::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 		AMovingCube* MovingCube = Cast<AMovingCube>(OtherActor);
 		if (MovingCube)
 		{
-			MovingCube->IncreaseScore();
+			if (CollectSound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), CollectSound, GetActorLocation());
+			if (CollectEffect)
+			{
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), CollectEffect, GetActorLocation(),
+					FRotator::ZeroRotator, FVector(1.0f), true, true, ENCPoolMethod::None, true);
+			}
+;			MovingCube->IncreaseScore();
 			Destroy();
 		}
 	}

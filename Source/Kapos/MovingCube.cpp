@@ -1,6 +1,9 @@
 #include "MovingCube.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
+
 
 AMovingCube::AMovingCube()
 {
@@ -24,6 +27,16 @@ void AMovingCube::BeginPlay()
 	Super::BeginPlay();
 	
 	OnActorHit.AddDynamic(this, &AMovingCube::OnHit);
+
+	if(PlayerWidgetClass)
+	{ 
+		PlayerWidget =  CreateWidget<UPlayerWidget>(GetWorld(), PlayerWidgetClass);
+		if (PlayerWidget)
+		{
+			PlayerWidget->AddToViewport();
+			PlayerWidget->ScoreText->SetText(FText::AsNumber(0));
+		}
+	}
 }
 
 void AMovingCube::Tick(float DeltaTime)
@@ -69,4 +82,13 @@ void AMovingCube::RestartLevel()
 {
 	FString CurrentLevelName = GetWorld()->GetName();
 	UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
+}
+
+void AMovingCube::IncreaseScore()
+{
+	score++;
+	if (PlayerWidget)
+	{
+		PlayerWidget->ScoreText->SetText(FText::AsNumber(score));
+	}
 }

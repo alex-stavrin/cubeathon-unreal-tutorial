@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "PlayerWidget.h"
 #include "MovingCube.generated.h"
 
 UCLASS()
@@ -36,6 +37,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	float FallZ = -400.f;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UPlayerWidget> PlayerWidgetClass;
+
+	UPROPERTY()
+	UPlayerWidget* PlayerWidget;
 
 	UFUNCTION()
 	void MoveRight(float Scale);
@@ -45,7 +52,7 @@ public:
 
 	void RestartLevel();
 
-	void IncreaseScore() { score++; };
+	void IncreaseScore();
 
 private:
 
